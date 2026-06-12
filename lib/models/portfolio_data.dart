@@ -30,7 +30,7 @@ class PortfolioData {
   static const String phone = "+91 9725020716";
   static const String contactImage = "assets/images/contact.jpeg";
   static const String contactDescription =
-      "I'm a Flutter developer with 5+ years of experience building scalable, high-performance mobile and web applications using clean architecture and modern state management like GetX, Bloc, Provider, Riverpod. I specialize in delivering user-friendly, API integration, and end-to-end app development.";
+      "I'm a Flutter developer with 6+ years of experience building scalable, high-performance mobile and web applications using clean architecture and modern state management like GetX, Bloc, Provider, Riverpod. I specialize in delivering user-friendly, API integration, and end-to-end app development.";
   static const String whatsapp = "https://wa.me/919725020716";
 
   // ── About ─────────────────────────────
