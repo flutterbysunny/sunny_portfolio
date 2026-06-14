@@ -4,6 +4,24 @@ import '../theme/app_theme.dart';
 import '../utils/responsive.dart';
 import '../models/portfolio_data.dart';
 
+// Shared nav config — order must match _sectionKeys in portfolio_page.dart
+// 0: About, 1: Skills, 2: Packages, 3: Experience, 4: Projects, 5: Contact
+class NavConfig {
+  static const List<String> labels = [
+    'About', 'Skills', 'Packages', 'Experience', 'Projects', 'Contact'
+  ];
+
+  static const List<String> icons = [
+    "assets/images/about.png",
+    "assets/images/skill.png",
+    "assets/images/packages.png",
+    "assets/images/experience.png",
+    "assets/images/projects.png",
+    "assets/images/contact.png",
+  ];
+}
+
+// ── Top Navbar (Web / Desktop / Tablet) ────────────────────────────────────────
 class PortfolioNavBar extends StatefulWidget {
   final ScrollController scrollController;
   final List<GlobalKey> sectionKeys;
@@ -20,9 +38,6 @@ class PortfolioNavBar extends StatefulWidget {
 
 class _PortfolioNavBarState extends State<PortfolioNavBar> {
   bool _scrolled = false;
-  bool _menuOpen = false;
-
-  final List<String> _navItems = ['About', 'Skills', 'Packages', 'Experience', 'Projects', 'Contact'];
 
   @override
   void initState() {
@@ -30,7 +45,14 @@ class _PortfolioNavBarState extends State<PortfolioNavBar> {
     widget.scrollController.addListener(_onScroll);
   }
 
+  @override
+  void dispose() {
+    widget.scrollController.removeListener(_onScroll);
+    super.dispose();
+  }
+
   void _onScroll() {
+    if (!mounted) return;
     setState(() => _scrolled = widget.scrollController.offset > 60);
   }
 
@@ -42,17 +64,14 @@ class _PortfolioNavBarState extends State<PortfolioNavBar> {
           duration: const Duration(milliseconds: 700),
           curve: Curves.easeInOutCubic);
     }
-    setState(() => _menuOpen = false);
   }
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = Responsive.isMobile(context);
-
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : 40,
+        horizontal: 40,
         vertical: _scrolled ? 14 : 20,
       ),
       decoration: BoxDecoration(
@@ -66,19 +85,11 @@ class _PortfolioNavBarState extends State<PortfolioNavBar> {
           ),
         ),
       ),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildLogo(),
-              if (isMobile)
-                _buildMobileMenuButton()
-              else
-                _buildDesktopNav(),
-            ],
-          ),
-          if (isMobile && _menuOpen) _buildMobileMenu(),
+          _buildLogo(),
+          _buildDesktopNav(),
         ],
       ),
     );
@@ -118,60 +129,13 @@ class _PortfolioNavBarState extends State<PortfolioNavBar> {
   Widget _buildDesktopNav() {
     return Row(
       children: [
-        ..._navItems.asMap().entries.map((e) => _NavLink(
-              label: e.value,
-              onTap: () => _scrollToSection(e.key),
-            )),
+        ...NavConfig.labels.asMap().entries.map((e) => _NavLink(
+          label: e.value,
+          onTap: () => _scrollToSection(e.key),
+        )),
         const SizedBox(width: 16),
-        _HireButton(onTap: () => _scrollToSection(4)),
+        _HireButton(onTap: () => _scrollToSection(5)),
       ],
-    );
-  }
-
-  Widget _buildMobileMenuButton() {
-    return NeuBox(
-      borderRadius: 8,
-      padding: const EdgeInsets.all(8),
-      child: GestureDetector(
-        onTap: () => setState(() => _menuOpen = !_menuOpen),
-        child: Icon(
-          _menuOpen ? Icons.close : Icons.menu,
-          color: AppColors.textPrimary,
-          size: 22,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMobileMenu() {
-    return Container(
-      margin: const EdgeInsets.only(top: 12),
-      child: NeuBox(
-        borderRadius: 12,
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: _navItems.asMap().entries.map((e) {
-            return GestureDetector(
-              onTap: () => _scrollToSection(e.key),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                decoration: const BoxDecoration(
-                  border: Border(bottom: BorderSide(color: AppColors.border, width: 0.5)),
-                ),
-                child: Text(
-                  e.value,
-                  style: GoogleFonts.inter(
-                    fontSize: 15,
-                    color: AppColors.textPrimary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      ),
     );
   }
 }
@@ -244,6 +208,161 @@ class _HireButtonState extends State<_HireButton> {
               color: AppColors.primary,
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Bottom Navigation Bar (Mobile) ─────────────────────────────────────────────
+class PortfolioBottomNavBar extends StatefulWidget {
+  final List<GlobalKey> sectionKeys;
+  final ScrollController scrollController;
+
+  const PortfolioBottomNavBar({
+    super.key,
+    required this.sectionKeys,
+    required this.scrollController,
+  });
+
+  @override
+  State<PortfolioBottomNavBar> createState() => _PortfolioBottomNavBarState();
+}
+
+class _PortfolioBottomNavBarState extends State<PortfolioBottomNavBar> {
+  int _activeIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    widget.scrollController.removeListener(_onScroll);
+    super.dispose();
+  }
+
+  // Highlight the nav item for the section currently in view
+  void _onScroll() {
+    if (!mounted) return;
+
+    int newIndex = _activeIndex;
+
+    for (int i = 0; i < widget.sectionKeys.length; i++) {
+      final ctx = widget.sectionKeys[i].currentContext;
+      if (ctx == null) continue;
+      final box = ctx.findRenderObject() as RenderBox?;
+      if (box == null) continue;
+
+      final position = box.localToGlobal(Offset.zero).dy;
+      // Section considered "active" once its top crosses ~35% of screen height
+      if (position <= MediaQuery.of(context).size.height * 0.35) {
+        newIndex = i;
+      }
+    }
+
+    if (newIndex != _activeIndex) {
+      setState(() => _activeIndex = newIndex);
+    }
+  }
+
+  void _onTap(int index) {
+    setState(() => _activeIndex = index);
+    final ctx = widget.sectionKeys[index].currentContext;
+    if (ctx != null) {
+      Scrollable.ensureVisible(
+        ctx,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOutCubic,
+        alignment: 0.05,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        child: NeuBox(
+          borderRadius: 24,
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(NavConfig.labels.length, (i) {
+              final isActive = i == _activeIndex;
+              return Expanded(
+                child: _BottomNavItem(
+                  imagePath: NavConfig.icons[i],
+                  label: NavConfig.labels[i],
+                  isActive: isActive,
+                  onTap: () => _onTap(i),
+                ),
+              );
+            }),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _BottomNavItem extends StatelessWidget {
+  final String imagePath;
+  final String label;
+  final bool isActive;
+  final VoidCallback onTap;
+
+  const _BottomNavItem({
+    required this.imagePath,
+    required this.label,
+    required this.isActive,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOut,
+        margin: const EdgeInsets.symmetric(horizontal: 3),
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: isActive
+              ? AppColors.primary.withOpacity(0.12)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              imagePath,
+              width: 20,
+              height: 20,
+              color: isActive
+                  ? AppColors.primary
+                  : AppColors.textSecondary,
+            ),
+            const SizedBox(height: 4),
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 200),
+              style: GoogleFonts.inter(
+                fontSize: 10,
+                fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
+                color: isActive
+                    ? AppColors.primary
+                    : AppColors.textSecondary,
+              ),
+              child: Text(label),
+            ),
+          ],
         ),
       ),
     );

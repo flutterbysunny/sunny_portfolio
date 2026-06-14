@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_portfolio/screens/packages_section.dart';
 import '../widgets/navbar.dart';
+import '../utils/responsive.dart';
 import 'hero_section.dart';
 import 'about_section.dart';
 import 'skills_section.dart';
@@ -18,7 +19,7 @@ class PortfolioPage extends StatefulWidget {
 class _PortfolioPageState extends State<PortfolioPage> {
   final ScrollController _scrollController = ScrollController();
 
-  // Keys for each section (same order as nav items: About, Skills, Experience, Projects, Contact)
+  // Keys order: About(0), Skills(1), Packages(2), Experience(3), Projects(4), Contact(5)
   final List<GlobalKey> _sectionKeys = List.generate(6, (_) => GlobalKey());
 
   @override
@@ -41,6 +42,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = Responsive.isMobile(context);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -50,12 +53,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
             child: Column(
               children: [
                 // Navbar spacer
-                const SizedBox(height: 80),
+                SizedBox(height: isMobile ? 20 : 80),
 
                 // Hero
                 HeroSection(
-                  onContactTap: () => _scrollToSection(4),
-                  onProjectsTap: () => _scrollToSection(3),
+                  onContactTap: () => _scrollToSection(5),
+                  onProjectsTap: () => _scrollToSection(4),
                 ),
 
                 // About
@@ -64,8 +67,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 // Skills
                 Container(key: _sectionKeys[1], child: const SkillsSection()),
 
+                // Packages
                 Container(key: _sectionKeys[2], child: const PackagesSection()),
-
 
                 // Experience
                 Container(key: _sectionKeys[3], child: const ExperienceSection()),
@@ -76,24 +79,38 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 // Contact
                 Container(key: _sectionKeys[5], child: const ContactSection()),
 
-
-
                 // Footer
                 const FooterWidget(),
+
+                // Extra space so content isn't hidden behind bottom nav
+                if (isMobile) const SizedBox(height: 90),
               ],
             ),
           ),
 
-          // Fixed Navbar overlay
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: PortfolioNavBar(
-              scrollController: _scrollController,
-              sectionKeys: _sectionKeys,
+          // Top Navbar — web / desktop / tablet only
+          if (!isMobile)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: PortfolioNavBar(
+                scrollController: _scrollController,
+                sectionKeys: _sectionKeys,
+              ),
             ),
-          ),
+
+          // Bottom App Bar — mobile only
+          if (isMobile)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: PortfolioBottomNavBar(
+                sectionKeys: _sectionKeys,
+                scrollController: _scrollController,
+              ),
+            ),
         ],
       ),
     );
