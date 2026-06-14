@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import '../models/portfolio_data.dart';
 import '../utils/responsive.dart';
@@ -80,48 +81,31 @@ class _ProjectCardState extends State<_ProjectCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header row: emoji + links
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  NeuBox(
-                    borderRadius: 14,
-                    padding: const EdgeInsets.all(12),
-                    child: Text(
-                      widget.project.emoji,
-                      style: const TextStyle(fontSize: 26),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      if (widget.project.githubUrl.isNotEmpty)
-                        _LinkIcon(
-                          icon: Icons.code_rounded,
-                          tooltip: "GitHub",
-                          onTap: () {},
-                        ),
-                      if (widget.project.liveUrl.isNotEmpty) ...[
-                        const SizedBox(width: 8),
-                        _LinkIcon(
-                          icon: Icons.open_in_new_rounded,
-                          tooltip: "Live Demo",
-                          onTap: () {},
-                        ),
-                      ],
-                    ],
-                  ),
-                ],
-              ),
-
               const SizedBox(height: 18),
 
-              Text(
-                widget.project.title,
-                style: GoogleFonts.spaceGrotesk(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: _hovered ? AppColors.primary : AppColors.textPrimary,
-                ),
+              Row(
+                children: [
+                  Text(
+                    widget.project.title,
+                    style: GoogleFonts.spaceGrotesk(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: _hovered ? AppColors.primary : AppColors.textPrimary,
+                    ),
+                  ),
+                  const Spacer(),
+                  StoreLinkIcon(
+                    imagePath: PortfolioData.playStoreBadge,
+                    tooltip: "Play Store",
+                    url: widget.project.playStoreUrl,
+                  ),
+                  const SizedBox(width: 10,),
+                  StoreLinkIcon(
+                    imagePath: PortfolioData.appStoreBadge,
+                    tooltip: "App Store",
+                    url: widget.project.appStoreUrl,
+                  ),
+                ],
               ),
 
               const SizedBox(height: 8),
@@ -134,7 +118,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                     color: AppColors.textSecondary,
                     height: 1.6,
                   ),
-                  maxLines: 4,
+                  maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -204,6 +188,64 @@ class _LinkIconState extends State<_LinkIcon> {
               color: _hovered
                   ? AppColors.primary
                   : AppColors.textSecondary,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+}
+class StoreLinkIcon extends StatefulWidget {
+  final String imagePath;
+  final String tooltip;
+  final String url;
+
+  const StoreLinkIcon({
+    required this.imagePath,
+    required this.tooltip,
+    required this.url,
+  });
+
+  @override
+  State<StoreLinkIcon> createState() => _StoreLinkIconState();
+}
+
+class _StoreLinkIconState extends State<StoreLinkIcon> {
+  bool _hovered = false;
+
+  Future<void> _launch() async {
+    final uri = Uri.parse(widget.url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: widget.tooltip,
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: _launch,
+          child: NeuBox(
+            isPressed: _hovered,
+            borderRadius: 8,
+            padding: const EdgeInsets.all(6),
+            child: Image.asset(
+              widget.imagePath,
+              width: 18,
+              height: 18,
+              fit: BoxFit.contain,
+              color: Colors.white,
+              errorBuilder: (_, __, ___) => Icon(
+                widget.tooltip == "Play Store" ? Icons.shop_outlined : Icons.apple,
+                size: 16,
+                color: _hovered ? AppColors.primary : AppColors.textSecondary,
+              ),
             ),
           ),
         ),

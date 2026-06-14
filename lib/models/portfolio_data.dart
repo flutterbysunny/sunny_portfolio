@@ -7,6 +7,10 @@ class PortfolioData {
   static const String name = "Sunny Singh";
   static const String profileImage = "assets/images/profile.png";
   static const String tagline = "Flutter Developer";
+  // Store badge image paths — assets/images/ mein daalo
+  static const String playStoreBadge = "assets/images/play-store.png";
+  static const String appStoreBadge = "assets/images/app-store.png";
+
   static const List<String> roles = [
     "Flutter Developer",
     "Mobile App Developer",
@@ -86,95 +90,134 @@ class PortfolioData {
   // ── Experience ────────────────────────
   static const List<ExperienceItem> experience = [
     ExperienceItem(
-      company: "Company Name",
+      company: "TechupR",
       role: "Senior Flutter Developer",
-      duration: "2022 – Present",
+      duration: "2024 – 2026",
       description:
           "Led development of cross-platform mobile apps. Architected scalable solutions "
           "using BLoC pattern and Firebase backend.",
-      technologies: ["Flutter", "Firebase", "GetX", "CI/CD"],
+      technologies: ["Flutter", "Firebase", "GetX", "Bloc", "Provider", "Agora", "Twilio", "CI/CD", "Socket.IO", "Node Js", "Graph QL"],
     ),
     ExperienceItem(
-      company: "Previous Company",
+      company: "Appuno IT Solutions",
       role: "Flutter Developer",
-      duration: "2020 – 2022",
+      duration: "2023 – 2024",
       description:
           "Built and maintained multiple Flutter applications. Integrated REST APIs, "
           "payment gateways, and push notifications.",
-      technologies: ["Flutter", "Dart", "REST API", "Firebase"],
+      technologies: ["Flutter", "Dart", "REST API", "Firebase", "GetX", "Socket.IO", "Payment Integration"],
     ),
     ExperienceItem(
-      company: "Startup / Freelance",
-      role: "Mobile Developer",
-      duration: "2019 – 2020",
+      company: "Devkrushna Technology Pvt Ltd",
+      role: "Flutter Developer",
+      duration: "2022 – 2023",
       description:
           "Delivered end-to-end mobile applications for clients across e-commerce "
           "and logistics domains.",
-      technologies: ["Flutter", "Node.js", "MongoDB"],
+      technologies: ["Flutter", "Rest API", "SQLITE", "GetX", "Firebase"],
+    ),
+    ExperienceItem(
+      company: "TriState Technology",
+      role: "Inter & Flutter Developer",
+      duration: "2021 – 2022",
+      description:
+      "Delivered end-to-end mobile applications for clients across e-commerce "
+          "and logistics domains.",
+      technologies: ["Flutter", "Dart","Firebase"],
     ),
   ];
 
   // ── Projects ──────────────────────────
   static const List<ProjectItem> projects = [
     ProjectItem(
-      title: "E-Commerce App",
+      title: "Universal EV",
       description:
-          "Full-featured shopping app with real-time inventory, cart management, "
-          "payment gateway integration, and admin dashboard.",
+          "A complete electric vehicle marketplace app for both Android and iOS. Users can browse an extensive product catalog, manage their cart, make secure Stripe payments, track orders in real-time, and leave reviews. The app features real-time inventory updates via Firebase Firestore and a clean, intuitive UI built entirely in Flutter.",
       tags: ["Flutter", "Firebase", "GetX", "Stripe"],
       githubUrl: "https://github.com/yourusername/project1",
       liveUrl: "",
       emoji: "🛒",
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.universalev.android&hl=en_IN",  // default empty
+      appStoreUrl: "https://apps.apple.com/in/app/universal-ev/id6479500968",   // default empty
+
     ),
     ProjectItem(
-      title: "Logistics Tracker",
+      title: "DateNite",
       description:
-          "Real-time delivery tracking app with Google Maps SDK, live order updates, "
-          "and driver management system.",
+          "DateNite is a mobile dating application that allows users to discover, connect, and interact with potential matches. The app offers swipe-based matching, real-time chat, and profile management, providing a smooth and interactive dating experience.",
       tags: ["Flutter", "Google Maps", "Firebase", "BLoC"],
       githubUrl: "https://github.com/yourusername/project2",
       liveUrl: "",
       emoji: "📦",
+      playStoreUrl: "https://play.google.com/store/apps/details?id=uk.co.datenite.app&hl=en_IN",  // default empty
+      appStoreUrl: "https://apps.apple.com/in/app/datenite-dating-matches/id1592597688",   // default empty
     ),
     ProjectItem(
-      title: "AI Chat App",
+      title: "The Urrbanify",
       description:
-          "Conversational AI powered mobile app with voice input, chat history, "
-          "and multiple AI model support.",
+          "Urbanify is a real estate mobile application developed completely from scratch using Flutter Dart.The app allows users to explore property listings, view project details, interactive maps, and get real-time information related to real estate projects.",
       tags: ["Flutter", "OpenAI API", "Firebase", "Provider"],
       githubUrl: "https://github.com/yourusername/project3",
       liveUrl: "",
       emoji: "🤖",
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.theurbanify&hl=en_IN",  // default empty
+      appStoreUrl: "https://apps.apple.com/in/app/the-urrbanify/id6742242837",   // default empty
     ),
     ProjectItem(
-      title: "Community Platform",
+      title: "MyRajasthan Club",
       description:
-          "Social networking app with posts, stories, real-time messaging, "
-          "and event management features.",
+          "MyRajasthan Club is a social media application that enables users to chat, communicate  in groups, and interact with each other. The app supports real-time chat, social login, in-app purchases, and push notifications",
       tags: ["Flutter", "Supabase", "Riverpod", "Golang"],
       githubUrl: "https://github.com/yourusername/project4",
       liveUrl: "",
       emoji: "👥",
+      playStoreUrl: "",  // default empty
+      appStoreUrl: "https://apps.apple.com/in/app/myrajasthan-club/id1545374835",   // default empty
     ),
     ProjectItem(
-      title: "Finance Manager",
+      title: "Finance Jobs Int",
       description:
-          "Personal finance app with budget tracking, expense categorization, "
-          "charts, and monthly reports.",
+          "Finance Jobs is a career-focused mobile application developed from scratch using Flutter and GetX, designed to help users search, apply, and track finance-related job opportunities through a smooth and scalable architecture.",
       tags: ["Flutter", "Hive", "fl_chart", "Provider"],
       githubUrl: "https://github.com/yourusername/project5",
       liveUrl: "",
       emoji: "💰",
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.app.financejobs&hl=en_IN",  // default empty
+      appStoreUrl: "https://apps.apple.com/us/app/finance-jobs-int/id6754635760",   // default empty
     ),
     ProjectItem(
-      title: "Fitness Tracker",
+      title: "Conteudo Local",
       description:
-          "Workout tracking app with custom exercise builder, progress analytics, "
-          "and health integrations.",
+          "Conteudo is a content-driven mobile application developed completely from scratch using Flutter and GetX. The app is designed to deliver structured digital content to users with a clean UI, smooth navigation, and scalable architecture.",
       tags: ["Flutter", "HealthKit", "Firebase", "BLoC"],
       githubUrl: "https://github.com/yourusername/project6",
       liveUrl: "",
       emoji: "💪",
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.conteudo.app&hl=en",  // default empty
+      appStoreUrl: "https://apps.apple.com/us/app/conteudo/id6755385342",   // default empty
+    ),
+
+    ProjectItem(
+      title: "Blkem",
+      description:
+        "An actionable social networking platform designed for the black community, allowing users to create posts, interact, and engage socially.",
+         tags: ["Flutter", "Social", "Firebase", "BLoC", "REST API"],
+      githubUrl: "https://github.com/yourusername/project6",
+      liveUrl: "",
+      emoji: "💪",
+      playStoreUrl: "https://blkem.updatestar.com/en",  // default empty
+      appStoreUrl: "https://blkem.updatestar.com/en",   // default empty
+    ),
+    ProjectItem(
+      title: "Atlantis My App",
+      description:
+        "Atlantis CRM is a mobile CRM application designed to help businesses manage customer interactions, leads, contacts, and sales activities on the go. It provides real-time access to customer data, communication tools, and business processes directly from mobile devices, improving productivity and field force efficiency.",
+         tags: ["Flutter", "Dart", "CRM Backend", "BLoC"],
+      githubUrl: "https://github.com/yourusername/project6",
+      liveUrl: "",
+      emoji: "💪",
+      playStoreUrl: "https://play.google.com/store/apps/details?id=com.atlantis.crm.app&hl=en_IN",  // default empty
+      appStoreUrl: "https://blkem.updatestar.com/en",   // default empty
     ),
   ];
 }
@@ -219,6 +262,9 @@ class ProjectItem {
   final String githubUrl;
   final String liveUrl;
   final String emoji;
+  final String playStoreUrl;
+  final String appStoreUrl;
+
 
   const ProjectItem({
     required this.title,
@@ -227,5 +273,7 @@ class ProjectItem {
     required this.githubUrl,
     required this.liveUrl,
     required this.emoji,
+    required this.playStoreUrl,
+    required this.appStoreUrl,
   });
 }
