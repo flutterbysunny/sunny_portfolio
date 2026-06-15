@@ -77,7 +77,7 @@ class AboutSection extends StatelessWidget {
         Wrap(
           spacing: 12,
           runSpacing: 10,
-          children: ['🐦 Flutter', '🔥 Firebase', '⚡ Golang', '📱 iOS/Android']
+          children: ['🐦 Flutter', '🔥 Firebase', '⚡ Socket.io', '📱 iOS/Android']
               .map((t) => NeuBox(
                     borderRadius: 8,
                     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),

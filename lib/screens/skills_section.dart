@@ -35,7 +35,7 @@ class SkillsSection extends StatelessWidget {
                 crossAxisCount: isMobile ? 1 : Responsive.isTablet(context) ? 2 : 3,
                 mainAxisSpacing: 16,
                 crossAxisSpacing: 16,
-                childAspectRatio: isMobile ? 2.5 : 1.8,
+                childAspectRatio: isMobile ? 2.2 : 1.8,
                 children: PortfolioData.skills
                     .map((cat) => _SkillCard(category: cat))
                     .toList(),
@@ -67,7 +67,7 @@ class _SkillCardState extends State<_SkillCard> {
       child: NeuBox(
         isPressed: _hovered,
         borderRadius: 16,
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

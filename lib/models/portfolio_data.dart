@@ -34,7 +34,7 @@ class PortfolioData {
   static const String phone = "+91 9725020716";
   static const String contactImage = "assets/images/contact.jpeg";
   static const String contactDescription =
-      "I'm a Flutter developer with 6+ years of experience building scalable, high-performance mobile and web applications using clean architecture and modern state management like GetX, Bloc, Provider, Riverpod. I specialize in delivering user-friendly, API integration, and end-to-end app development.";
+      "I'm a Flutter developer with 5+ years of experience building scalable, high-performance mobile and web applications using clean architecture and modern state management like GetX, Bloc, Provider, Riverpod. I specialize in delivering user-friendly, API integration, and end-to-end app development.";
   static const String whatsapp = "https://wa.me/919725020716";
 
   // ── About ─────────────────────────────
@@ -47,10 +47,10 @@ class PortfolioData {
       "and contribute to open-source projects.";
 
   static const List<StatItem> stats = [
-    StatItem(value: "X+", label: "Years Exp"),
+    StatItem(value: "5+", label: "Years Exp"),
     StatItem(value: "20+", label: "Projects"),
     StatItem(value: "10+", label: "Clients"),
-    StatItem(value: "5★", label: "Reviews"),
+    StatItem(value: "4.5★", label: "Reviews"),
   ];
 
   // ── Skills ────────────────────────────
@@ -118,7 +118,7 @@ class PortfolioData {
     ),
     ExperienceItem(
       company: "TriState Technology",
-      role: "Inter & Flutter Developer",
+      role: "Intern & Flutter Developer",
       duration: "2021 – 2022",
       description:
       "Delivered end-to-end mobile applications for clients across e-commerce "
@@ -167,7 +167,7 @@ class PortfolioData {
       title: "MyRajasthan Club",
       description:
           "MyRajasthan Club is a social media application that enables users to chat, communicate  in groups, and interact with each other. The app supports real-time chat, social login, in-app purchases, and push notifications",
-      tags: ["Flutter", "Supabase", "Riverpod", "Golang"],
+      tags: ["Flutter", "Supabase", "Riverpod", "Rest API"],
       githubUrl: "https://github.com/yourusername/project4",
       liveUrl: "",
       emoji: "👥",

@@ -286,10 +286,10 @@ class _PortfolioBottomNavBarState extends State<PortfolioBottomNavBar> {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        padding: const EdgeInsets.fromLTRB(10, 0, 12, 10),
         child: NeuBox(
           borderRadius: 24,
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(NavConfig.labels.length, (i) {
@@ -331,7 +331,7 @@ class _BottomNavItem extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOut,
-        margin: const EdgeInsets.symmetric(horizontal: 3),
+        margin: const EdgeInsets.symmetric(horizontal: 2),
         padding: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
           color: isActive
@@ -344,8 +344,8 @@ class _BottomNavItem extends StatelessWidget {
           children: [
             Image.asset(
               imagePath,
-              width: 20,
-              height: 20,
+              width: 18,
+              height: 18,
               color: isActive
                   ? AppColors.primary
                   : AppColors.textSecondary,
