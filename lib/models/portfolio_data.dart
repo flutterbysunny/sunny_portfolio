@@ -63,17 +63,17 @@ class PortfolioData {
     SkillCategory(
       title: "Backend",
       icon: "⚡",
-      skills: ["Firebase", "Supabase", "REST API", "GraphQL"],
+      skills: ["Firebase", "Supabase", "REST API", "GraphQL","Node JS"],
     ),
     SkillCategory(
       title: "State Management",
       icon: "🔄",
-      skills: ["GetX", "BLoC", "Provider", "Riverpod"],
+      skills: ["GetX", "BLoC", "Provider", "Riverpod","Custom"],
     ),
     SkillCategory(
       title: "Tools",
       icon: "🛠",
-      skills: ["Git", "CI/CD", "Figma", "Postman", "Jira"],
+      skills: ["Git", "CI/CD", "Figma", "Postman", "Jira","Planner","Slack"],
     ),
     SkillCategory(
       title: "Other",
